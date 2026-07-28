@@ -1,0 +1,60 @@
+# Secrets & env
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials.json
+**/secrets/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+dist/
+build/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Data / artifacts (keep schemas, ignore heavy dumps)
+instruments/datasets/**/*.jsonl
+instruments/datasets/**/*.parquet
+instruments/datasets/**/*.csv
+!instruments/datasets/**/.gitkeep
+!instruments/datasets/**/README.md
+!instruments/datasets/**/schema.md
+results/**/*.json
+results/**/*.parquet
+!results/**/.gitkeep
+!results/**/README.md
+sprints/**/results/*.json
+sprints/**/results/*.parquet
+!sprints/**/results/.gitkeep
+!sprints/**/results/README.md
+
+# Caches & OS
+.cache/
+*.log
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Agent / local tooling
+.claude/
+.cursor/
+.codex/
