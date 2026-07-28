@@ -2,14 +2,20 @@
 
 Uniform cost + latency schema used by **every** sprint.
 
-Starts in Sprint 01. Capstone cross-sprint comparison only works if this schema stays stable.
+```python
+from costmeter import CostMeter
 
-## Goals
+meter = CostMeter(sprint="01-faithfulness")
+with meter.track("faithfulness.decompose", model="gpt-4o-mini") as h:
+    h["input_tokens"] = 120
+    h["output_tokens"] = 40
+print(meter.summary())  # p50/p95, total_cost_usd, ...
+```
 
-- One record shape for tokens, $, wall time, model id, operation name
-- OpenTelemetry GenAI semantic conventions where applicable
-- Results readable by `results/` aggregators without per-sprint adapters
+## Schema
+
+`CostEvent` (`costmeter.v1`): sprint, operation, model, tokens, cost_usd, latency_ms, OTel-inspired naming.
 
 ## Status
 
-Scaffold — schema lands with Sprint 01 implementation.
+v1 landed with Sprint 01.

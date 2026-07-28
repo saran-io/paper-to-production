@@ -64,7 +64,16 @@ paper-to-production/
 
 | Sprint | Metric | Value | Cost / op | p50 | p95 | Notes |
 |---|---|---|---|---|---|---|
-| 01 | κ (faithfulness vs human) | TBD | TBD | TBD | TBD | — |
+| 01 | κ (faithfulness vs human) | TBD (seed fixtures + tests green) | heuristic $0; LLM TBD | TBD | TBD | Run `faithfulness fixtures` |
+
+## Develop
+
+```bash
+python3.12 -m venv .venv && source .venv/bin/activate
+pip install -e ".[dev]"
+pytest -q
+faithfulness fixtures --mode heuristic
+```
 
 ---
 

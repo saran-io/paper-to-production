@@ -1,0 +1,120 @@
+{
+  "schema": "faithfulness.fixtures.v1",
+  "description": "Seed fixtures for Sprint 01 — CI + regression. Expand toward ~75 labelled cases.",
+  "examples": [
+    {
+      "id": "fully_supported_4b",
+      "bucket": "fully_supported",
+      "question": "Tell me about unit 4B.",
+      "contexts": [
+        "Unit 4B is a 2BHK apartment priced at ₹1.2 Cr. It includes pool access. Carpet area is 1100 sq ft."
+      ],
+      "answer": "Unit 4B is a 2BHK priced at ₹1.2 Cr. It includes pool access. Carpet area is 1100 sq ft.",
+      "human_claims": [
+        {"claim": "Unit 4B is a 2BHK priced at ₹1.2 Cr.", "supported": true},
+        {"claim": "It includes pool access.", "supported": true},
+        {"claim": "Carpet area is 1100 sq ft.", "supported": true}
+      ],
+      "expected_max_score": 1.0,
+      "notes": "All claims grounded in context."
+    },
+    {
+      "id": "hallucination_wrong_price",
+      "bucket": "wrong_price_or_feature",
+      "question": "What is the price of unit 4B?",
+      "contexts": [
+        "Unit 4B is a 2BHK apartment priced at ₹1.2 Cr. It includes pool access."
+      ],
+      "answer": "Unit 4B is priced at ₹1.8 Cr and includes a gym.",
+      "human_claims": [
+        {"claim": "Unit 4B is priced at ₹1.8 Cr", "supported": false},
+        {"claim": "Unit 4B includes a gym.", "supported": false}
+      ],
+      "expected_max_score": 0.5,
+      "notes": "REGRESSION: must NOT score as fully faithful."
+    },
+    {
+      "id": "partially_supported",
+      "bucket": "partially_supported",
+      "question": "Does 4B have amenities?",
+      "contexts": [
+        "Unit 4B includes pool access. Parking is covered."
+      ],
+      "answer": "4B has pool access. 4B has a gym.",
+      "human_claims": [
+        {"claim": "4B has pool access.", "supported": true},
+        {"claim": "4B has a gym.", "supported": false}
+      ],
+      "expected_max_score": 0.75
+    },
+    {
+      "id": "merged_two_properties",
+      "bucket": "facts_merged_across_properties",
+      "question": "Summarize unit 4B.",
+      "contexts": [
+        "Unit 4B is a 2BHK priced at ₹1.2 Cr with pool access."
+      ],
+      "answer": "Unit 4B is a 3BHK. Unit 4B is priced at ₹1.2 Cr. Unit 4B has a private gym.",
+      "human_claims": [
+        {"claim": "Unit 4B is a 3BHK.", "supported": false},
+        {"claim": "Unit 4B is priced at ₹1.2 Cr.", "supported": true},
+        {"claim": "Unit 4B has a private gym.", "supported": false}
+      ],
+      "expected_max_score": 0.5,
+      "notes": "Answer mixes another unit's BHK/gym into 4B. Context is only 4B (if 9A were also retrieved, union-faithfulness can hide entity-binding errors — LLM verify must catch that later)."
+    },
+    {
+      "id": "correct_but_unsupported",
+      "bucket": "correct_but_unsupported",
+      "question": "Is there a clubhouse?",
+      "contexts": [
+        "Unit 4B is a 2BHK priced at ₹1.2 Cr. Pool access is included."
+      ],
+      "answer": "Yes, the project has a clubhouse.",
+      "human_claims": [
+        {"claim": "The project has a clubhouse.", "supported": false}
+      ],
+      "expected_max_score": 0.0,
+      "notes": "May be true in the world; not in retrieved context → unfaithful for RAG."
+    },
+    {
+      "id": "contradictory_bhk",
+      "bucket": "contradictory",
+      "question": "How many bedrooms in 4B?",
+      "contexts": [
+        "Unit 4B is a 2BHK apartment."
+      ],
+      "answer": "Unit 4B is a 3BHK.",
+      "human_claims": [
+        {"claim": "Unit 4B is a 3BHK.", "supported": false}
+      ],
+      "expected_max_score": 0.0
+    },
+    {
+      "id": "empty_retrieval",
+      "bucket": "empty_retrieval",
+      "question": "What is the price of unit 4B?",
+      "contexts": [],
+      "answer": "Unit 4B is priced at ₹1.2 Cr.",
+      "human_claims": [
+        {"claim": "Unit 4B is priced at ₹1.2 Cr.", "supported": false}
+      ],
+      "expected_max_score": 0.0,
+      "notes": "No context → nothing can be supported."
+    },
+    {
+      "id": "poor_retrieval_other_unit",
+      "bucket": "poor_retrieval",
+      "question": "Price of unit 4B?",
+      "contexts": [
+        "Unit 9A is a 3BHK priced at ₹2.1 Cr with a private gym."
+      ],
+      "answer": "Unit 4B is priced at ₹2.1 Cr.",
+      "human_claims": [
+        {"claim": "Unit 4B is priced at ₹2.1 Cr.", "supported": false}
+      ],
+      "expected_max_score": 0.0,
+      "notes": "Retrieved wrong unit; answer still unfaithful to *this* context about 4B."
+    }
+  ]
+}

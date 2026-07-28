@@ -8,6 +8,18 @@
 
 You can implement RAGAS-style faithfulness in a weekend; you cannot trust the score until you run a judge audit and report chance-corrected agreement with humans.
 
+## Papers (read these)
+
+| Role | Paper | arXiv | HTML (easier read) |
+|---|---|---|---|
+| **Primary** | RAGAS: Automated Evaluation of RAG | [2309.15217](https://arxiv.org/abs/2309.15217) | [ar5iv](https://ar5iv.labs.arxiv.org/html/2309.15217) |
+| Supporting | FActScore: atomic fact decomposition | [2305.14251](https://arxiv.org/abs/2305.14251) | [ar5iv](https://ar5iv.labs.arxiv.org/html/2305.14251) |
+| **Critical** | Reliability without Validity (judge audit / MVVP) | [2606.19544](https://arxiv.org/abs/2606.19544) | [ar5iv](https://ar5iv.labs.arxiv.org/html/2606.19544) |
+| Optional | G-Eval | [2303.16634](https://arxiv.org/abs/2303.16634) | [ar5iv](https://ar5iv.labs.arxiv.org/html/2303.16634) |
+| Optional | Judging LLM-as-a-Judge (Zheng et al.) | [2306.05685](https://arxiv.org/abs/2306.05685) | [ar5iv](https://ar5iv.labs.arxiv.org/html/2306.05685) |
+
+**Start here (primary):** https://ar5iv.labs.arxiv.org/html/2309.15217
+
 ## Surfaces
 
 | Surface | When (IST) | Job |

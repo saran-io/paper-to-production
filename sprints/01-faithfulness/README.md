@@ -46,13 +46,30 @@
 └── results/           ← run outputs (gitignored dumps; keep summaries)
 ```
 
+## Quick start
+
+```bash
+# from repo root
+python3.12 -m venv .venv && source .venv/bin/activate
+pip install -e ".[dev]"
+pytest -q
+faithfulness fixtures --mode heuristic   # no API key
+
+# real LLM judge (optional)
+pip install -e ".[dev,llm]"
+export OPENAI_API_KEY=...
+faithfulness fixtures --mode llm
+```
+
 ## Production bar (must all pass before publish)
 
-- [ ] Regression test fails when a known hallucination scores as faithful
-- [ ] p50 / p95 latency recorded
-- [ ] Cost per evaluation recorded
+- [x] Regression test fails when a known hallucination scores as faithful
+- [x] p50 / p95 latency recorded (`costmeter` summary)
+- [x] Cost per evaluation recorded (heuristic=$0; LLM estimates USD)
 - [ ] Failure-mode section in CONTENT / blog draft
 - [ ] Documented rollback / degradation path
+- [ ] ~75 human-labelled cases + Cohen's κ
+- [ ] RAGAS comparison on same set
 
 ## Week-of calendar
 
