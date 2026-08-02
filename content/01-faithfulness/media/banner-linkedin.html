@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LinkedIn card — an unaudited metric is an ornament</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500&family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  html,body{ margin:0; padding:0; overflow:hidden; background:#f4f6f4; }
+  svg{ display:block; width:100vw; height:100vh; }
+</style>
+</head>
+<body>
+<!-- Export at 1200 x 1200 (LinkedIn in-feed square) -->
+<svg viewBox="0 0 1200 1200" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"
+     role="img" aria-label="An unaudited metric is an ornament. The machine's grade and a human's grade stand at the same height on eight tested cases, and the line runs on past the point where any testing was done.">
+  <rect width="1200" height="1200" fill="#f4f6f4"/>
+
+  <!-- ================= headline ================= -->
+  <g font-family="Montserrat,sans-serif" font-weight="700" font-size="66" fill="#333333"
+     letter-spacing="-0.02em">
+    <text x="100" y="230">An unaudited metric</text>
+    <text x="100" y="306">is an ornament.</text>
+  </g>
+  <g font-family="Lexend,sans-serif" font-weight="300" font-size="26" fill="#666666">
+    <text x="100" y="382">So I put the machine's grade next to a human's on the</text>
+    <text x="100" y="420">same cases &#8212; and drew the line where the testing stops.</text>
+  </g>
+
+  <!-- ================= what has been tested ================= -->
+  <text x="1120" y="488" font-family="Montserrat,sans-serif" font-weight="600" font-size="22"
+        fill="#4a4a4a" text-anchor="end" letter-spacing="0.13em">PAST HERE, NOTHING IS TESTED</text>
+
+  <g fill="rgba(15,157,72,0.30)">
+    <rect x="100" y="540" width="700" height="28"/>
+    <rect x="100" y="584" width="700" height="28"/>
+    <rect x="100" y="628" width="700" height="28"/>
+  </g>
+  <g fill="#f4f6f4" stroke="rgba(51,51,51,0.55)" stroke-width="2">
+    <rect x="100" y="568" width="700" height="16"/>
+    <rect x="100" y="612" width="700" height="16"/>
+  </g>
+  <g stroke="#333333" stroke-width="3">
+    <line x1="100" y1="540" x2="800" y2="540"/>
+    <line x1="100" y1="656" x2="800" y2="656"/>
+  </g>
+  <rect x="90" y="524" width="10" height="148" fill="rgba(51,51,51,0.14)" stroke="#333333" stroke-width="2"/>
+
+  <!-- ================= and what has not ================= -->
+  <line x1="800" y1="512" x2="800" y2="700" stroke="#d0342c" stroke-width="2" stroke-dasharray="9,7"/>
+  <g stroke="#d0342c" stroke-width="3" stroke-dasharray="14,10">
+    <line x1="800" y1="540" x2="1120" y2="540"/>
+    <line x1="800" y1="656" x2="1120" y2="656"/>
+  </g>
+
+  <!-- ================= the two grades, side by side ================= -->
+  <line x1="270" y1="656" x2="270" y2="700" stroke="#0f9d48" stroke-width="3"/>
+  <line x1="450" y1="656" x2="450" y2="700" stroke="#949494" stroke-width="2" stroke-dasharray="8,6"/>
+  <rect x="240" y="700" width="60" height="160" fill="rgba(15,157,72,0.30)" stroke="#0f9d48" stroke-width="3"/>
+  <rect x="420" y="700" width="60" height="160" fill="rgba(51,51,51,0.10)" stroke="#666666" stroke-width="3"/>
+  <g stroke="#1f6fd0" stroke-width="3">
+    <line x1="210" y1="860" x2="510" y2="860"/>
+    <line x1="210" y1="846" x2="210" y2="874"/>
+    <line x1="510" y1="846" x2="510" y2="874"/>
+  </g>
+  <g font-family="Montserrat,sans-serif" font-weight="600" font-size="22"
+     fill="#4a4a4a" text-anchor="middle" letter-spacing="0.13em">
+    <text x="270" y="908">MACHINE</text>
+    <text x="450" y="908">HUMAN</text>
+    <text x="360" y="956">SAME GRADE, 8 CASES</text>
+  </g>
+
+  <!-- ================= attribution rail ================= -->
+  <line x1="100" y1="1060" x2="1100" y2="1060" stroke="rgba(51,51,51,0.14)" stroke-width="2"/>
+  <circle cx="108" cy="1105" r="7" fill="#0f9d48"/>
+  <text x="132" y="1113" font-family="Montserrat,sans-serif" font-weight="600" font-size="22"
+        fill="#333333" letter-spacing="0.10em">saran.build</text>
+  <text x="1100" y="1113" font-family="Montserrat,sans-serif" font-weight="600" font-size="18"
+        fill="#949494" text-anchor="end" letter-spacing="0.16em">PAPER-TO-PRODUCTION</text>
+</svg>
+</body>
+</html>

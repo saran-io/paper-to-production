@@ -1,0 +1,422 @@
+{
+  "schema": "listings.v1",
+  "n": 30,
+  "listings": [
+    {
+      "id": "listing_01",
+      "project": "Oakwood Residences",
+      "city": "Bengaluru",
+      "unit": "2A",
+      "bhk": 2,
+      "price_cr": 0.72,
+      "carpet_sqft": 685,
+      "amenities": [
+        "pool",
+        "covered parking"
+      ],
+      "text": "Project: Oakwood Residences, Bengaluru. Unit 2A is a 2BHK apartment priced at \u20b90.72 Cr. Carpet area is 685 sq ft. Amenities: pool, covered parking. Floor 2 of 18. Possession: ready-to-move."
+    },
+    {
+      "id": "listing_02",
+      "project": "Lakeview Heights",
+      "city": "Hyderabad",
+      "unit": "3B",
+      "bhk": 2,
+      "price_cr": 0.79,
+      "carpet_sqft": 720,
+      "amenities": [
+        "gym",
+        "clubhouse"
+      ],
+      "text": "Project: Lakeview Heights, Hyderabad. Unit 3B is a 2BHK apartment priced at \u20b90.79 Cr. Carpet area is 720 sq ft. Amenities: gym, clubhouse. Floor 3 of 18. Possession: ready-to-move."
+    },
+    {
+      "id": "listing_03",
+      "project": "Palm Grove",
+      "city": "Pune",
+      "unit": "4C",
+      "bhk": 3,
+      "price_cr": 0.86,
+      "carpet_sqft": 755,
+      "amenities": [
+        "pool",
+        "gym"
+      ],
+      "text": "Project: Palm Grove, Pune. Unit 4C is a 3BHK apartment priced at \u20b90.86 Cr. Carpet area is 755 sq ft. Amenities: pool, gym. Floor 4 of 18. Possession: ready-to-move."
+    },
+    {
+      "id": "listing_04",
+      "project": "Skyline Park",
+      "city": "Chennai",
+      "unit": "5D",
+      "bhk": 2,
+      "price_cr": 0.93,
+      "carpet_sqft": 790,
+      "amenities": [
+        "garden",
+        "children play area"
+      ],
+      "text": "Project: Skyline Park, Chennai. Unit 5D is a 2BHK apartment priced at \u20b90.93 Cr. Carpet area is 790 sq ft. Amenities: garden, children play area. Floor 5 of 18. Possession: ready-to-move."
+    },
+    {
+      "id": "listing_05",
+      "project": "Oakwood Residences",
+      "city": "Bengaluru",
+      "unit": "6E",
+      "bhk": 2,
+      "price_cr": 1.0,
+      "carpet_sqft": 825,
+      "amenities": [
+        "covered parking"
+      ],
+      "text": "Project: Oakwood Residences, Bengaluru. Unit 6E is a 2BHK apartment priced at \u20b91.0 Cr. Carpet area is 825 sq ft. Amenities: covered parking. Floor 6 of 18. Possession: ready-to-move."
+    },
+    {
+      "id": "listing_06",
+      "project": "Lakeview Heights",
+      "city": "Hyderabad",
+      "unit": "7F",
+      "bhk": 1,
+      "price_cr": 1.07,
+      "carpet_sqft": 860,
+      "amenities": [
+        "pool",
+        "power backup"
+      ],
+      "text": "Project: Lakeview Heights, Hyderabad. Unit 7F is a 1BHK apartment priced at \u20b91.07 Cr. Carpet area is 860 sq ft. Amenities: pool, power backup. Floor 7 of 18. Possession: ready-to-move."
+    },
+    {
+      "id": "listing_07",
+      "project": "Palm Grove",
+      "city": "Pune",
+      "unit": "8G",
+      "bhk": 2,
+      "price_cr": 1.14,
+      "carpet_sqft": 895,
+      "amenities": [
+        "gym",
+        "security"
+      ],
+      "text": "Project: Palm Grove, Pune. Unit 8G is a 2BHK apartment priced at \u20b91.14 Cr. Carpet area is 895 sq ft. Amenities: gym, security. Floor 8 of 18. Possession: ready-to-move."
+    },
+    {
+      "id": "listing_08",
+      "project": "Skyline Park",
+      "city": "Chennai",
+      "unit": "9H",
+      "bhk": 2,
+      "price_cr": 1.21,
+      "carpet_sqft": 930,
+      "amenities": [
+        "clubhouse",
+        "jogging track"
+      ],
+      "text": "Project: Skyline Park, Chennai. Unit 9H is a 2BHK apartment priced at \u20b91.21 Cr. Carpet area is 930 sq ft. Amenities: clubhouse, jogging track. Floor 9 of 18. Possession: ready-to-move."
+    },
+    {
+      "id": "listing_09",
+      "project": "Oakwood Residences",
+      "city": "Bengaluru",
+      "unit": "10A",
+      "bhk": 3,
+      "price_cr": 1.28,
+      "carpet_sqft": 965,
+      "amenities": [
+        "pool",
+        "covered parking"
+      ],
+      "text": "Project: Oakwood Residences, Bengaluru. Unit 10A is a 3BHK apartment priced at \u20b91.28 Cr. Carpet area is 965 sq ft. Amenities: pool, covered parking. Floor 10 of 18. Possession: ready-to-move."
+    },
+    {
+      "id": "listing_10",
+      "project": "Lakeview Heights",
+      "city": "Hyderabad",
+      "unit": "11B",
+      "bhk": 2,
+      "price_cr": 1.35,
+      "carpet_sqft": 1000,
+      "amenities": [
+        "gym",
+        "clubhouse"
+      ],
+      "text": "Project: Lakeview Heights, Hyderabad. Unit 11B is a 2BHK apartment priced at \u20b91.35 Cr. Carpet area is 1000 sq ft. Amenities: gym, clubhouse. Floor 11 of 18. Possession: ready-to-move."
+    },
+    {
+      "id": "listing_11",
+      "project": "Palm Grove",
+      "city": "Pune",
+      "unit": "12C",
+      "bhk": 2,
+      "price_cr": 1.42,
+      "carpet_sqft": 1035,
+      "amenities": [
+        "pool",
+        "gym"
+      ],
+      "text": "Project: Palm Grove, Pune. Unit 12C is a 2BHK apartment priced at \u20b91.42 Cr. Carpet area is 1035 sq ft. Amenities: pool, gym. Floor 12 of 18. Possession: ready-to-move."
+    },
+    {
+      "id": "listing_12",
+      "project": "Skyline Park",
+      "city": "Chennai",
+      "unit": "1D",
+      "bhk": 1,
+      "price_cr": 1.49,
+      "carpet_sqft": 1070,
+      "amenities": [
+        "garden",
+        "children play area"
+      ],
+      "text": "Project: Skyline Park, Chennai. Unit 1D is a 1BHK apartment priced at \u20b91.49 Cr. Carpet area is 1070 sq ft. Amenities: garden, children play area. Floor 13 of 18. Possession: ready-to-move."
+    },
+    {
+      "id": "listing_13",
+      "project": "Oakwood Residences",
+      "city": "Bengaluru",
+      "unit": "2E",
+      "bhk": 2,
+      "price_cr": 1.56,
+      "carpet_sqft": 1105,
+      "amenities": [
+        "covered parking"
+      ],
+      "text": "Project: Oakwood Residences, Bengaluru. Unit 2E is a 2BHK apartment priced at \u20b91.56 Cr. Carpet area is 1105 sq ft. Amenities: covered parking. Floor 14 of 18. Possession: ready-to-move."
+    },
+    {
+      "id": "listing_14",
+      "project": "Lakeview Heights",
+      "city": "Hyderabad",
+      "unit": "3F",
+      "bhk": 2,
+      "price_cr": 1.63,
+      "carpet_sqft": 1140,
+      "amenities": [
+        "pool",
+        "power backup"
+      ],
+      "text": "Project: Lakeview Heights, Hyderabad. Unit 3F is a 2BHK apartment priced at \u20b91.63 Cr. Carpet area is 1140 sq ft. Amenities: pool, power backup. Floor 15 of 18. Possession: ready-to-move."
+    },
+    {
+      "id": "listing_15",
+      "project": "Palm Grove",
+      "city": "Pune",
+      "unit": "4G",
+      "bhk": 3,
+      "price_cr": 1.7,
+      "carpet_sqft": 1175,
+      "amenities": [
+        "gym",
+        "security"
+      ],
+      "text": "Project: Palm Grove, Pune. Unit 4G is a 3BHK apartment priced at \u20b91.7 Cr. Carpet area is 1175 sq ft. Amenities: gym, security. Floor 1 of 18. Possession: ready-to-move."
+    },
+    {
+      "id": "listing_16",
+      "project": "Skyline Park",
+      "city": "Chennai",
+      "unit": "5H",
+      "bhk": 2,
+      "price_cr": 1.77,
+      "carpet_sqft": 1210,
+      "amenities": [
+        "clubhouse",
+        "jogging track"
+      ],
+      "text": "Project: Skyline Park, Chennai. Unit 5H is a 2BHK apartment priced at \u20b91.77 Cr. Carpet area is 1210 sq ft. Amenities: clubhouse, jogging track. Floor 2 of 18. Possession: ready-to-move."
+    },
+    {
+      "id": "listing_17",
+      "project": "Oakwood Residences",
+      "city": "Bengaluru",
+      "unit": "6A",
+      "bhk": 2,
+      "price_cr": 1.84,
+      "carpet_sqft": 1245,
+      "amenities": [
+        "pool",
+        "covered parking"
+      ],
+      "text": "Project: Oakwood Residences, Bengaluru. Unit 6A is a 2BHK apartment priced at \u20b91.84 Cr. Carpet area is 1245 sq ft. Amenities: pool, covered parking. Floor 3 of 18. Possession: ready-to-move."
+    },
+    {
+      "id": "listing_18",
+      "project": "Lakeview Heights",
+      "city": "Hyderabad",
+      "unit": "7B",
+      "bhk": 1,
+      "price_cr": 1.91,
+      "carpet_sqft": 1280,
+      "amenities": [
+        "gym",
+        "clubhouse"
+      ],
+      "text": "Project: Lakeview Heights, Hyderabad. Unit 7B is a 1BHK apartment priced at \u20b91.91 Cr. Carpet area is 1280 sq ft. Amenities: gym, clubhouse. Floor 4 of 18. Possession: ready-to-move."
+    },
+    {
+      "id": "listing_19",
+      "project": "Palm Grove",
+      "city": "Pune",
+      "unit": "8C",
+      "bhk": 2,
+      "price_cr": 1.98,
+      "carpet_sqft": 1315,
+      "amenities": [
+        "pool",
+        "gym"
+      ],
+      "text": "Project: Palm Grove, Pune. Unit 8C is a 2BHK apartment priced at \u20b91.98 Cr. Carpet area is 1315 sq ft. Amenities: pool, gym. Floor 5 of 18. Possession: ready-to-move."
+    },
+    {
+      "id": "listing_20",
+      "project": "Skyline Park",
+      "city": "Chennai",
+      "unit": "9D",
+      "bhk": 2,
+      "price_cr": 2.05,
+      "carpet_sqft": 1350,
+      "amenities": [
+        "garden",
+        "children play area"
+      ],
+      "text": "Project: Skyline Park, Chennai. Unit 9D is a 2BHK apartment priced at \u20b92.05 Cr. Carpet area is 1350 sq ft. Amenities: garden, children play area. Floor 6 of 18. Possession: ready-to-move."
+    },
+    {
+      "id": "listing_21",
+      "project": "Oakwood Residences",
+      "city": "Bengaluru",
+      "unit": "10E",
+      "bhk": 3,
+      "price_cr": 2.12,
+      "carpet_sqft": 1385,
+      "amenities": [
+        "covered parking"
+      ],
+      "text": "Project: Oakwood Residences, Bengaluru. Unit 10E is a 3BHK apartment priced at \u20b92.12 Cr. Carpet area is 1385 sq ft. Amenities: covered parking. Floor 7 of 18. Possession: ready-to-move."
+    },
+    {
+      "id": "listing_22",
+      "project": "Lakeview Heights",
+      "city": "Hyderabad",
+      "unit": "11F",
+      "bhk": 2,
+      "price_cr": 2.19,
+      "carpet_sqft": 1420,
+      "amenities": [
+        "pool",
+        "power backup"
+      ],
+      "text": "Project: Lakeview Heights, Hyderabad. Unit 11F is a 2BHK apartment priced at \u20b92.19 Cr. Carpet area is 1420 sq ft. Amenities: pool, power backup. Floor 8 of 18. Possession: ready-to-move."
+    },
+    {
+      "id": "listing_23",
+      "project": "Palm Grove",
+      "city": "Pune",
+      "unit": "12G",
+      "bhk": 2,
+      "price_cr": 2.26,
+      "carpet_sqft": 1455,
+      "amenities": [
+        "gym",
+        "security"
+      ],
+      "text": "Project: Palm Grove, Pune. Unit 12G is a 2BHK apartment priced at \u20b92.26 Cr. Carpet area is 1455 sq ft. Amenities: gym, security. Floor 9 of 18. Possession: ready-to-move."
+    },
+    {
+      "id": "listing_24",
+      "project": "Skyline Park",
+      "city": "Chennai",
+      "unit": "1H",
+      "bhk": 1,
+      "price_cr": 2.33,
+      "carpet_sqft": 1490,
+      "amenities": [
+        "clubhouse",
+        "jogging track"
+      ],
+      "text": "Project: Skyline Park, Chennai. Unit 1H is a 1BHK apartment priced at \u20b92.33 Cr. Carpet area is 1490 sq ft. Amenities: clubhouse, jogging track. Floor 10 of 18. Possession: ready-to-move."
+    },
+    {
+      "id": "listing_25",
+      "project": "Oakwood Residences",
+      "city": "Bengaluru",
+      "unit": "2A",
+      "bhk": 2,
+      "price_cr": 2.4,
+      "carpet_sqft": 1525,
+      "amenities": [
+        "pool",
+        "covered parking"
+      ],
+      "text": "Project: Oakwood Residences, Bengaluru. Unit 2A is a 2BHK apartment priced at \u20b92.4 Cr. Carpet area is 1525 sq ft. Amenities: pool, covered parking. Floor 11 of 18. Possession: ready-to-move."
+    },
+    {
+      "id": "listing_26",
+      "project": "Lakeview Heights",
+      "city": "Hyderabad",
+      "unit": "3B",
+      "bhk": 2,
+      "price_cr": 2.47,
+      "carpet_sqft": 1560,
+      "amenities": [
+        "gym",
+        "clubhouse"
+      ],
+      "text": "Project: Lakeview Heights, Hyderabad. Unit 3B is a 2BHK apartment priced at \u20b92.47 Cr. Carpet area is 1560 sq ft. Amenities: gym, clubhouse. Floor 12 of 18. Possession: ready-to-move."
+    },
+    {
+      "id": "listing_27",
+      "project": "Palm Grove",
+      "city": "Pune",
+      "unit": "4C",
+      "bhk": 3,
+      "price_cr": 2.54,
+      "carpet_sqft": 1595,
+      "amenities": [
+        "pool",
+        "gym"
+      ],
+      "text": "Project: Palm Grove, Pune. Unit 4C is a 3BHK apartment priced at \u20b92.54 Cr. Carpet area is 1595 sq ft. Amenities: pool, gym. Floor 13 of 18. Possession: ready-to-move."
+    },
+    {
+      "id": "listing_28",
+      "project": "Skyline Park",
+      "city": "Chennai",
+      "unit": "5D",
+      "bhk": 2,
+      "price_cr": 2.61,
+      "carpet_sqft": 1630,
+      "amenities": [
+        "garden",
+        "children play area"
+      ],
+      "text": "Project: Skyline Park, Chennai. Unit 5D is a 2BHK apartment priced at \u20b92.61 Cr. Carpet area is 1630 sq ft. Amenities: garden, children play area. Floor 14 of 18. Possession: ready-to-move."
+    },
+    {
+      "id": "listing_29",
+      "project": "Oakwood Residences",
+      "city": "Bengaluru",
+      "unit": "6E",
+      "bhk": 2,
+      "price_cr": 2.68,
+      "carpet_sqft": 1665,
+      "amenities": [
+        "covered parking"
+      ],
+      "text": "Project: Oakwood Residences, Bengaluru. Unit 6E is a 2BHK apartment priced at \u20b92.68 Cr. Carpet area is 1665 sq ft. Amenities: covered parking. Floor 15 of 18. Possession: ready-to-move."
+    },
+    {
+      "id": "listing_30",
+      "project": "Lakeview Heights",
+      "city": "Hyderabad",
+      "unit": "7F",
+      "bhk": 1,
+      "price_cr": 2.75,
+      "carpet_sqft": 1700,
+      "amenities": [
+        "pool",
+        "power backup"
+      ],
+      "text": "Project: Lakeview Heights, Hyderabad. Unit 7F is a 1BHK apartment priced at \u20b92.75 Cr. Carpet area is 1700 sq ft. Amenities: pool, power backup. Floor 1 of 18. Possession: ready-to-move."
+    }
+  ]
+}

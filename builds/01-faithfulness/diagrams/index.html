@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sprint 01 diagrams</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Inter, system-ui, sans-serif; background: #e8ecf1; color: #14233a; padding: 3rem 1.5rem; }
+    .wrap { max-width: 560px; margin: 0 auto; }
+    h1 { font-size: 1.4rem; font-weight: 700; margin-bottom: 0.4rem; }
+    p { color: #5a6a7c; margin-bottom: 1.5rem; line-height: 1.45; font-size: 0.92rem; }
+    a { display: block; color: inherit; text-decoration: none; border-bottom: 1px solid #c5ccd6; padding: 0.95rem 0; }
+    a:hover { color: #0f9f78; }
+    a strong { display: block; margin-bottom: 0.15rem; }
+    a span { font-size: 0.84rem; color: #5a6a7c; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Sprint 01 diagrams</h1>
+    <p>Weaviate RAG shell, traced closely. Start with the reference clone to judge accuracy, then use the faithfulness remap for the post.</p>
+    <a href="00-rag-reference-exact.html"><strong>00 · RAG reference (exact shell)</strong><span>Original Weaviate labels — accuracy check vs your PNG</span></a>
+    <a href="01-pipeline.html"><strong>01 · Faithfulness (same shell)</strong><span>Retrieved context · Judge LLM · steps 1–4 remapped</span></a>
+    <a href="02-kappa-gap.html"><strong>02 · Agreement</strong><span>κ gap board</span></a>
+    <a href="03-where-it-runs.html"><strong>03 · CI → live</strong><span>Tenant-style board</span></a>
+  </div>
+</body>
+</html>

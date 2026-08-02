@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faithfulness in production</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #eceff3;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 2rem;
+      font-family: Inter, system-ui, sans-serif;
+    }
+    .board {
+      width: min(920px, 100%);
+      aspect-ratio: 16 / 11;
+      background: #f3f5f8;
+    }
+    svg { width: 100%; height: 100%; display: block; }
+  </style>
+</head>
+<body>
+  <div class="board">
+    <svg viewBox="0 0 920 632" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="a" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+          <path d="M0 0 L9 3.5 L0 7 Z" fill="#132033"/>
+        </marker>
+        <!-- person glyph -->
+        <g id="person">
+          <circle cx="0" cy="-10" r="10" fill="none" stroke="#132033" stroke-width="2.5"/>
+          <path d="M-16 22 c0 -12 8 -18 16 -18 s16 6 16 18" fill="none" stroke="#132033" stroke-width="2.5" stroke-linecap="round"/>
+        </g>
+      </defs>
+
+      <rect width="920" height="632" fill="#f3f5f8"/>
+      <text x="460" y="52" text-anchor="middle" font-family="Inter,sans-serif" font-size="26" font-weight="700" fill="#132033">Faithfulness in production</text>
+
+      <!-- MEM zone -->
+      <rect x="56" y="88" width="808" height="220" rx="18" fill="#e4ebf3" stroke="#132033" stroke-width="2" stroke-dasharray="9 7"/>
+      <text x="84" y="128" font-family="Inter,sans-serif" font-size="20" font-weight="700" fill="#132033">CI</text>
+
+      <!-- Two active tenants only — not a wall of cards -->
+      <g transform="translate(260 200)">
+        <rect x="-70" y="-70" width="140" height="140" rx="10" fill="#ffffff" stroke="#132033" stroke-width="2.5"/>
+        <rect x="-36" y="-92" width="72" height="24" rx="12" fill="#1fc49a"/>
+        <text x="0" y="-75" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#132033">ACTIVE</text>
+        <use href="#person" y="-8"/>
+        <text x="0" y="48" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" font-weight="600" fill="#132033">Fixtures</text>
+      </g>
+
+      <g transform="translate(560 200)">
+        <rect x="-70" y="-70" width="140" height="140" rx="10" fill="#ffffff" stroke="#132033" stroke-width="2.5"/>
+        <rect x="-36" y="-92" width="72" height="24" rx="12" fill="#1fc49a"/>
+        <text x="0" y="-75" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#132033">ACTIVE</text>
+        <use href="#person" y="-8"/>
+        <text x="0" y="48" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" font-weight="600" fill="#132033">Evaluator</text>
+      </g>
+
+      <!-- Deactivate arrow -->
+      <line x1="300" y1="308" x2="300" y2="368" stroke="#132033" stroke-width="2.5" marker-end="url(#a)"/>
+      <text x="318" y="348" font-family="Inter,sans-serif" font-size="13" fill="#132033">Ship only after κ holds</text>
+
+      <!-- Activate arrow -->
+      <line x1="620" y1="368" x2="620" y2="308" stroke="#132033" stroke-width="2.5" marker-end="url(#a)"/>
+      <text x="638" y="348" font-family="Inter,sans-serif" font-size="13" fill="#132033">Promote to live audit</text>
+
+      <!-- DISK zone -->
+      <rect x="56" y="380" width="808" height="200" rx="18" fill="#e4ebf3" stroke="#132033" stroke-width="2" stroke-dasharray="9 7"/>
+      <text x="84" y="420" font-family="Inter,sans-serif" font-size="20" font-weight="700" fill="#132033">LIVE</text>
+
+      <g transform="translate(300 500)">
+        <rect x="-70" y="-70" width="140" height="140" rx="10" fill="#ffffff" stroke="#132033" stroke-width="2.5"/>
+        <rect x="-42" y="-92" width="84" height="24" rx="12" fill="#8e84a8"/>
+        <text x="0" y="-75" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#ffffff">SHADOW</text>
+        <use href="#person" y="-8"/>
+        <text x="0" y="48" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" font-weight="600" fill="#132033">Async audit</text>
+      </g>
+
+      <g transform="translate(620 500)">
+        <rect x="-70" y="-70" width="140" height="140" rx="10" fill="#ffffff" stroke="#132033" stroke-width="2.5"/>
+        <rect x="-46" y="-92" width="92" height="24" rx="12" fill="#8e84a8"/>
+        <text x="0" y="-75" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#ffffff">INACTIVE</text>
+        <use href="#person" y="-8"/>
+        <text x="0" y="48" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" font-weight="600" fill="#132033">Price gate</text>
+      </g>
+    </svg>
+  </div>
+</body>
+</html>

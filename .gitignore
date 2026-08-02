@@ -19,9 +19,6 @@ build/
 venv/
 *.egg
 
-# Local fixture run dumps (keep README)
-sprints/01-faithfulness/results/fixture_run.json
-sprints/01-faithfulness/results/*.costmeter.jsonl
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
@@ -42,10 +39,17 @@ results/**/*.json
 results/**/*.parquet
 !results/**/.gitkeep
 !results/**/README.md
-sprints/**/results/*.json
-sprints/**/results/*.parquet
-!sprints/**/results/.gitkeep
-!sprints/**/results/README.md
+
+# Build run dumps (keep README only)
+builds/**/results/*.json
+builds/**/results/*.jsonl
+builds/**/results/*.parquet
+builds/**/results/*.costmeter.jsonl
+!builds/**/results/.gitkeep
+!builds/**/results/README.md
+
+# Content WIP / scratch (do not publish junk to GitHub)
+content/**/_wip/
 
 # Caches & OS
 .cache/

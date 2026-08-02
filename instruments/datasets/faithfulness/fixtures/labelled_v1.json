@@ -1,0 +1,1064 @@
+{
+  "schema": "faithfulness.fixtures.v1",
+  "description": "Sprint 01 labelled set \u2014 seed + generated from 30 listings. Expand toward 75\u2013100.",
+  "examples": [
+    {
+      "id": "fully_supported_4b",
+      "bucket": "fully_supported",
+      "question": "Tell me about unit 4B.",
+      "contexts": [
+        "Unit 4B is a 2BHK apartment priced at \u20b91.2 Cr. It includes pool access. Carpet area is 1100 sq ft."
+      ],
+      "answer": "Unit 4B is a 2BHK priced at \u20b91.2 Cr. It includes pool access. Carpet area is 1100 sq ft.",
+      "human_claims": [
+        {
+          "claim": "Unit 4B is a 2BHK priced at \u20b91.2 Cr.",
+          "supported": true
+        },
+        {
+          "claim": "It includes pool access.",
+          "supported": true
+        },
+        {
+          "claim": "Carpet area is 1100 sq ft.",
+          "supported": true
+        }
+      ],
+      "expected_max_score": 1.0,
+      "notes": "All claims grounded in context."
+    },
+    {
+      "id": "hallucination_wrong_price",
+      "bucket": "wrong_price_or_feature",
+      "question": "What is the price of unit 4B?",
+      "contexts": [
+        "Unit 4B is a 2BHK apartment priced at \u20b91.2 Cr. It includes pool access."
+      ],
+      "answer": "Unit 4B is priced at \u20b91.8 Cr and includes a gym.",
+      "human_claims": [
+        {
+          "claim": "Unit 4B is priced at \u20b91.8 Cr",
+          "supported": false
+        },
+        {
+          "claim": "Unit 4B includes a gym.",
+          "supported": false
+        }
+      ],
+      "expected_max_score": 0.5,
+      "notes": "REGRESSION: must NOT score as fully faithful."
+    },
+    {
+      "id": "partially_supported",
+      "bucket": "partially_supported",
+      "question": "Does 4B have amenities?",
+      "contexts": [
+        "Unit 4B includes pool access. Parking is covered."
+      ],
+      "answer": "4B has pool access. 4B has a gym.",
+      "human_claims": [
+        {
+          "claim": "4B has pool access.",
+          "supported": true
+        },
+        {
+          "claim": "4B has a gym.",
+          "supported": false
+        }
+      ],
+      "expected_max_score": 0.75
+    },
+    {
+      "id": "merged_two_properties",
+      "bucket": "facts_merged_across_properties",
+      "question": "Summarize unit 4B.",
+      "contexts": [
+        "Unit 4B is a 2BHK priced at \u20b91.2 Cr with pool access."
+      ],
+      "answer": "Unit 4B is a 3BHK. Unit 4B is priced at \u20b91.2 Cr. Unit 4B has a private gym.",
+      "human_claims": [
+        {
+          "claim": "Unit 4B is a 3BHK.",
+          "supported": false
+        },
+        {
+          "claim": "Unit 4B is priced at \u20b91.2 Cr.",
+          "supported": true
+        },
+        {
+          "claim": "Unit 4B has a private gym.",
+          "supported": false
+        }
+      ],
+      "expected_max_score": 0.5,
+      "notes": "Answer mixes another unit's BHK/gym into 4B. Context is only 4B (if 9A were also retrieved, union-faithfulness can hide entity-binding errors \u2014 LLM verify must catch that later)."
+    },
+    {
+      "id": "correct_but_unsupported",
+      "bucket": "correct_but_unsupported",
+      "question": "Is there a clubhouse?",
+      "contexts": [
+        "Unit 4B is a 2BHK priced at \u20b91.2 Cr. Pool access is included."
+      ],
+      "answer": "Yes, the project has a clubhouse.",
+      "human_claims": [
+        {
+          "claim": "The project has a clubhouse.",
+          "supported": false
+        }
+      ],
+      "expected_max_score": 0.0,
+      "notes": "May be true in the world; not in retrieved context \u2192 unfaithful for RAG."
+    },
+    {
+      "id": "contradictory_bhk",
+      "bucket": "contradictory",
+      "question": "How many bedrooms in 4B?",
+      "contexts": [
+        "Unit 4B is a 2BHK apartment."
+      ],
+      "answer": "Unit 4B is a 3BHK.",
+      "human_claims": [
+        {
+          "claim": "Unit 4B is a 3BHK.",
+          "supported": false
+        }
+      ],
+      "expected_max_score": 0.0
+    },
+    {
+      "id": "empty_retrieval",
+      "bucket": "empty_retrieval",
+      "question": "What is the price of unit 4B?",
+      "contexts": [],
+      "answer": "Unit 4B is priced at \u20b91.2 Cr.",
+      "human_claims": [
+        {
+          "claim": "Unit 4B is priced at \u20b91.2 Cr.",
+          "supported": false
+        }
+      ],
+      "expected_max_score": 0.0,
+      "notes": "No context \u2192 nothing can be supported."
+    },
+    {
+      "id": "poor_retrieval_other_unit",
+      "bucket": "poor_retrieval",
+      "question": "Price of unit 4B?",
+      "contexts": [
+        "Unit 9A is a 3BHK priced at \u20b92.1 Cr with a private gym."
+      ],
+      "answer": "Unit 4B is priced at \u20b92.1 Cr.",
+      "human_claims": [
+        {
+          "claim": "Unit 4B is priced at \u20b92.1 Cr.",
+          "supported": false
+        }
+      ],
+      "expected_max_score": 0.0,
+      "notes": "Retrieved wrong unit; answer still unfaithful to *this* context about 4B."
+    },
+    {
+      "id": "gen_full_listing_01",
+      "bucket": "fully_supported",
+      "question": "Tell me about unit 2A.",
+      "contexts": [
+        "Project: Oakwood Residences, Bengaluru. Unit 2A is a 2BHK apartment priced at \u20b90.72 Cr. Carpet area is 685 sq ft. Amenities: pool, covered parking. Floor 2 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 2A is a 2BHK priced at \u20b90.72 Cr. Carpet area is 685 sq ft. It includes pool.",
+      "human_claims": [
+        {
+          "claim": "Unit 2A is a 2BHK priced at \u20b90.72 Cr.",
+          "supported": true
+        },
+        {
+          "claim": "Carpet area is 685 sq ft.",
+          "supported": true
+        },
+        {
+          "claim": "It includes pool.",
+          "supported": true
+        }
+      ],
+      "expected_max_score": 1.0
+    },
+    {
+      "id": "gen_price_listing_01",
+      "bucket": "wrong_price_or_feature",
+      "question": "What is the price of unit 2A?",
+      "contexts": [
+        "Project: Oakwood Residences, Bengaluru. Unit 2A is a 2BHK apartment priced at \u20b90.72 Cr. Carpet area is 685 sq ft. Amenities: pool, covered parking. Floor 2 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 2A is priced at \u20b91.12 Cr.",
+      "human_claims": [
+        {
+          "claim": "Unit 2A is priced at \u20b91.12 Cr.",
+          "supported": false
+        }
+      ],
+      "expected_max_score": 0.0
+    },
+    {
+      "id": "gen_full_listing_02",
+      "bucket": "fully_supported",
+      "question": "Tell me about unit 3B.",
+      "contexts": [
+        "Project: Lakeview Heights, Hyderabad. Unit 3B is a 2BHK apartment priced at \u20b90.79 Cr. Carpet area is 720 sq ft. Amenities: gym, clubhouse. Floor 3 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 3B is a 2BHK priced at \u20b90.79 Cr. Carpet area is 720 sq ft. It includes gym.",
+      "human_claims": [
+        {
+          "claim": "Unit 3B is a 2BHK priced at \u20b90.79 Cr.",
+          "supported": true
+        },
+        {
+          "claim": "Carpet area is 720 sq ft.",
+          "supported": true
+        },
+        {
+          "claim": "It includes gym.",
+          "supported": true
+        }
+      ],
+      "expected_max_score": 1.0
+    },
+    {
+      "id": "gen_price_listing_02",
+      "bucket": "wrong_price_or_feature",
+      "question": "What is the price of unit 3B?",
+      "contexts": [
+        "Project: Lakeview Heights, Hyderabad. Unit 3B is a 2BHK apartment priced at \u20b90.79 Cr. Carpet area is 720 sq ft. Amenities: gym, clubhouse. Floor 3 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 3B is priced at \u20b91.19 Cr.",
+      "human_claims": [
+        {
+          "claim": "Unit 3B is priced at \u20b91.19 Cr.",
+          "supported": false
+        }
+      ],
+      "expected_max_score": 0.0
+    },
+    {
+      "id": "gen_full_listing_03",
+      "bucket": "fully_supported",
+      "question": "Tell me about unit 4C.",
+      "contexts": [
+        "Project: Palm Grove, Pune. Unit 4C is a 3BHK apartment priced at \u20b90.86 Cr. Carpet area is 755 sq ft. Amenities: pool, gym. Floor 4 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 4C is a 3BHK priced at \u20b90.86 Cr. Carpet area is 755 sq ft. It includes pool.",
+      "human_claims": [
+        {
+          "claim": "Unit 4C is a 3BHK priced at \u20b90.86 Cr.",
+          "supported": true
+        },
+        {
+          "claim": "Carpet area is 755 sq ft.",
+          "supported": true
+        },
+        {
+          "claim": "It includes pool.",
+          "supported": true
+        }
+      ],
+      "expected_max_score": 1.0
+    },
+    {
+      "id": "gen_price_listing_03",
+      "bucket": "wrong_price_or_feature",
+      "question": "What is the price of unit 4C?",
+      "contexts": [
+        "Project: Palm Grove, Pune. Unit 4C is a 3BHK apartment priced at \u20b90.86 Cr. Carpet area is 755 sq ft. Amenities: pool, gym. Floor 4 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 4C is priced at \u20b91.26 Cr.",
+      "human_claims": [
+        {
+          "claim": "Unit 4C is priced at \u20b91.26 Cr.",
+          "supported": false
+        }
+      ],
+      "expected_max_score": 0.0
+    },
+    {
+      "id": "gen_full_listing_04",
+      "bucket": "fully_supported",
+      "question": "Tell me about unit 5D.",
+      "contexts": [
+        "Project: Skyline Park, Chennai. Unit 5D is a 2BHK apartment priced at \u20b90.93 Cr. Carpet area is 790 sq ft. Amenities: garden, children play area. Floor 5 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 5D is a 2BHK priced at \u20b90.93 Cr. Carpet area is 790 sq ft. It includes garden.",
+      "human_claims": [
+        {
+          "claim": "Unit 5D is a 2BHK priced at \u20b90.93 Cr.",
+          "supported": true
+        },
+        {
+          "claim": "Carpet area is 790 sq ft.",
+          "supported": true
+        },
+        {
+          "claim": "It includes garden.",
+          "supported": true
+        }
+      ],
+      "expected_max_score": 1.0
+    },
+    {
+      "id": "gen_price_listing_04",
+      "bucket": "wrong_price_or_feature",
+      "question": "What is the price of unit 5D?",
+      "contexts": [
+        "Project: Skyline Park, Chennai. Unit 5D is a 2BHK apartment priced at \u20b90.93 Cr. Carpet area is 790 sq ft. Amenities: garden, children play area. Floor 5 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 5D is priced at \u20b91.33 Cr.",
+      "human_claims": [
+        {
+          "claim": "Unit 5D is priced at \u20b91.33 Cr.",
+          "supported": false
+        }
+      ],
+      "expected_max_score": 0.0
+    },
+    {
+      "id": "gen_full_listing_05",
+      "bucket": "fully_supported",
+      "question": "Tell me about unit 6E.",
+      "contexts": [
+        "Project: Oakwood Residences, Bengaluru. Unit 6E is a 2BHK apartment priced at \u20b91.0 Cr. Carpet area is 825 sq ft. Amenities: covered parking. Floor 6 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 6E is a 2BHK priced at \u20b91.0 Cr. Carpet area is 825 sq ft. It includes covered parking.",
+      "human_claims": [
+        {
+          "claim": "Unit 6E is a 2BHK priced at \u20b91.0 Cr.",
+          "supported": true
+        },
+        {
+          "claim": "Carpet area is 825 sq ft.",
+          "supported": true
+        },
+        {
+          "claim": "It includes covered parking.",
+          "supported": true
+        }
+      ],
+      "expected_max_score": 1.0
+    },
+    {
+      "id": "gen_price_listing_05",
+      "bucket": "wrong_price_or_feature",
+      "question": "What is the price of unit 6E?",
+      "contexts": [
+        "Project: Oakwood Residences, Bengaluru. Unit 6E is a 2BHK apartment priced at \u20b91.0 Cr. Carpet area is 825 sq ft. Amenities: covered parking. Floor 6 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 6E is priced at \u20b91.4 Cr.",
+      "human_claims": [
+        {
+          "claim": "Unit 6E is priced at \u20b91.4 Cr.",
+          "supported": false
+        }
+      ],
+      "expected_max_score": 0.0
+    },
+    {
+      "id": "gen_full_listing_06",
+      "bucket": "fully_supported",
+      "question": "Tell me about unit 7F.",
+      "contexts": [
+        "Project: Lakeview Heights, Hyderabad. Unit 7F is a 1BHK apartment priced at \u20b91.07 Cr. Carpet area is 860 sq ft. Amenities: pool, power backup. Floor 7 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 7F is a 1BHK priced at \u20b91.07 Cr. Carpet area is 860 sq ft. It includes pool.",
+      "human_claims": [
+        {
+          "claim": "Unit 7F is a 1BHK priced at \u20b91.07 Cr.",
+          "supported": true
+        },
+        {
+          "claim": "Carpet area is 860 sq ft.",
+          "supported": true
+        },
+        {
+          "claim": "It includes pool.",
+          "supported": true
+        }
+      ],
+      "expected_max_score": 1.0
+    },
+    {
+      "id": "gen_price_listing_06",
+      "bucket": "wrong_price_or_feature",
+      "question": "What is the price of unit 7F?",
+      "contexts": [
+        "Project: Lakeview Heights, Hyderabad. Unit 7F is a 1BHK apartment priced at \u20b91.07 Cr. Carpet area is 860 sq ft. Amenities: pool, power backup. Floor 7 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 7F is priced at \u20b91.47 Cr.",
+      "human_claims": [
+        {
+          "claim": "Unit 7F is priced at \u20b91.47 Cr.",
+          "supported": false
+        }
+      ],
+      "expected_max_score": 0.0
+    },
+    {
+      "id": "gen_full_listing_07",
+      "bucket": "fully_supported",
+      "question": "Tell me about unit 8G.",
+      "contexts": [
+        "Project: Palm Grove, Pune. Unit 8G is a 2BHK apartment priced at \u20b91.14 Cr. Carpet area is 895 sq ft. Amenities: gym, security. Floor 8 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 8G is a 2BHK priced at \u20b91.14 Cr. Carpet area is 895 sq ft. It includes gym.",
+      "human_claims": [
+        {
+          "claim": "Unit 8G is a 2BHK priced at \u20b91.14 Cr.",
+          "supported": true
+        },
+        {
+          "claim": "Carpet area is 895 sq ft.",
+          "supported": true
+        },
+        {
+          "claim": "It includes gym.",
+          "supported": true
+        }
+      ],
+      "expected_max_score": 1.0
+    },
+    {
+      "id": "gen_price_listing_07",
+      "bucket": "wrong_price_or_feature",
+      "question": "What is the price of unit 8G?",
+      "contexts": [
+        "Project: Palm Grove, Pune. Unit 8G is a 2BHK apartment priced at \u20b91.14 Cr. Carpet area is 895 sq ft. Amenities: gym, security. Floor 8 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 8G is priced at \u20b91.54 Cr.",
+      "human_claims": [
+        {
+          "claim": "Unit 8G is priced at \u20b91.54 Cr.",
+          "supported": false
+        }
+      ],
+      "expected_max_score": 0.0
+    },
+    {
+      "id": "gen_full_listing_08",
+      "bucket": "fully_supported",
+      "question": "Tell me about unit 9H.",
+      "contexts": [
+        "Project: Skyline Park, Chennai. Unit 9H is a 2BHK apartment priced at \u20b91.21 Cr. Carpet area is 930 sq ft. Amenities: clubhouse, jogging track. Floor 9 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 9H is a 2BHK priced at \u20b91.21 Cr. Carpet area is 930 sq ft. It includes clubhouse.",
+      "human_claims": [
+        {
+          "claim": "Unit 9H is a 2BHK priced at \u20b91.21 Cr.",
+          "supported": true
+        },
+        {
+          "claim": "Carpet area is 930 sq ft.",
+          "supported": true
+        },
+        {
+          "claim": "It includes clubhouse.",
+          "supported": true
+        }
+      ],
+      "expected_max_score": 1.0
+    },
+    {
+      "id": "gen_price_listing_08",
+      "bucket": "wrong_price_or_feature",
+      "question": "What is the price of unit 9H?",
+      "contexts": [
+        "Project: Skyline Park, Chennai. Unit 9H is a 2BHK apartment priced at \u20b91.21 Cr. Carpet area is 930 sq ft. Amenities: clubhouse, jogging track. Floor 9 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 9H is priced at \u20b91.61 Cr.",
+      "human_claims": [
+        {
+          "claim": "Unit 9H is priced at \u20b91.61 Cr.",
+          "supported": false
+        }
+      ],
+      "expected_max_score": 0.0
+    },
+    {
+      "id": "gen_full_listing_09",
+      "bucket": "fully_supported",
+      "question": "Tell me about unit 10A.",
+      "contexts": [
+        "Project: Oakwood Residences, Bengaluru. Unit 10A is a 3BHK apartment priced at \u20b91.28 Cr. Carpet area is 965 sq ft. Amenities: pool, covered parking. Floor 10 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 10A is a 3BHK priced at \u20b91.28 Cr. Carpet area is 965 sq ft. It includes pool.",
+      "human_claims": [
+        {
+          "claim": "Unit 10A is a 3BHK priced at \u20b91.28 Cr.",
+          "supported": true
+        },
+        {
+          "claim": "Carpet area is 965 sq ft.",
+          "supported": true
+        },
+        {
+          "claim": "It includes pool.",
+          "supported": true
+        }
+      ],
+      "expected_max_score": 1.0
+    },
+    {
+      "id": "gen_price_listing_09",
+      "bucket": "wrong_price_or_feature",
+      "question": "What is the price of unit 10A?",
+      "contexts": [
+        "Project: Oakwood Residences, Bengaluru. Unit 10A is a 3BHK apartment priced at \u20b91.28 Cr. Carpet area is 965 sq ft. Amenities: pool, covered parking. Floor 10 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 10A is priced at \u20b91.68 Cr.",
+      "human_claims": [
+        {
+          "claim": "Unit 10A is priced at \u20b91.68 Cr.",
+          "supported": false
+        }
+      ],
+      "expected_max_score": 0.0
+    },
+    {
+      "id": "gen_full_listing_10",
+      "bucket": "fully_supported",
+      "question": "Tell me about unit 11B.",
+      "contexts": [
+        "Project: Lakeview Heights, Hyderabad. Unit 11B is a 2BHK apartment priced at \u20b91.35 Cr. Carpet area is 1000 sq ft. Amenities: gym, clubhouse. Floor 11 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 11B is a 2BHK priced at \u20b91.35 Cr. Carpet area is 1000 sq ft. It includes gym.",
+      "human_claims": [
+        {
+          "claim": "Unit 11B is a 2BHK priced at \u20b91.35 Cr.",
+          "supported": true
+        },
+        {
+          "claim": "Carpet area is 1000 sq ft.",
+          "supported": true
+        },
+        {
+          "claim": "It includes gym.",
+          "supported": true
+        }
+      ],
+      "expected_max_score": 1.0
+    },
+    {
+      "id": "gen_price_listing_10",
+      "bucket": "wrong_price_or_feature",
+      "question": "What is the price of unit 11B?",
+      "contexts": [
+        "Project: Lakeview Heights, Hyderabad. Unit 11B is a 2BHK apartment priced at \u20b91.35 Cr. Carpet area is 1000 sq ft. Amenities: gym, clubhouse. Floor 11 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 11B is priced at \u20b91.75 Cr.",
+      "human_claims": [
+        {
+          "claim": "Unit 11B is priced at \u20b91.75 Cr.",
+          "supported": false
+        }
+      ],
+      "expected_max_score": 0.0
+    },
+    {
+      "id": "gen_full_listing_11",
+      "bucket": "fully_supported",
+      "question": "Tell me about unit 12C.",
+      "contexts": [
+        "Project: Palm Grove, Pune. Unit 12C is a 2BHK apartment priced at \u20b91.42 Cr. Carpet area is 1035 sq ft. Amenities: pool, gym. Floor 12 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 12C is a 2BHK priced at \u20b91.42 Cr. Carpet area is 1035 sq ft. It includes pool.",
+      "human_claims": [
+        {
+          "claim": "Unit 12C is a 2BHK priced at \u20b91.42 Cr.",
+          "supported": true
+        },
+        {
+          "claim": "Carpet area is 1035 sq ft.",
+          "supported": true
+        },
+        {
+          "claim": "It includes pool.",
+          "supported": true
+        }
+      ],
+      "expected_max_score": 1.0
+    },
+    {
+      "id": "gen_price_listing_11",
+      "bucket": "wrong_price_or_feature",
+      "question": "What is the price of unit 12C?",
+      "contexts": [
+        "Project: Palm Grove, Pune. Unit 12C is a 2BHK apartment priced at \u20b91.42 Cr. Carpet area is 1035 sq ft. Amenities: pool, gym. Floor 12 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 12C is priced at \u20b91.82 Cr.",
+      "human_claims": [
+        {
+          "claim": "Unit 12C is priced at \u20b91.82 Cr.",
+          "supported": false
+        }
+      ],
+      "expected_max_score": 0.0
+    },
+    {
+      "id": "gen_full_listing_12",
+      "bucket": "fully_supported",
+      "question": "Tell me about unit 1D.",
+      "contexts": [
+        "Project: Skyline Park, Chennai. Unit 1D is a 1BHK apartment priced at \u20b91.49 Cr. Carpet area is 1070 sq ft. Amenities: garden, children play area. Floor 13 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 1D is a 1BHK priced at \u20b91.49 Cr. Carpet area is 1070 sq ft. It includes garden.",
+      "human_claims": [
+        {
+          "claim": "Unit 1D is a 1BHK priced at \u20b91.49 Cr.",
+          "supported": true
+        },
+        {
+          "claim": "Carpet area is 1070 sq ft.",
+          "supported": true
+        },
+        {
+          "claim": "It includes garden.",
+          "supported": true
+        }
+      ],
+      "expected_max_score": 1.0
+    },
+    {
+      "id": "gen_price_listing_12",
+      "bucket": "wrong_price_or_feature",
+      "question": "What is the price of unit 1D?",
+      "contexts": [
+        "Project: Skyline Park, Chennai. Unit 1D is a 1BHK apartment priced at \u20b91.49 Cr. Carpet area is 1070 sq ft. Amenities: garden, children play area. Floor 13 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 1D is priced at \u20b91.89 Cr.",
+      "human_claims": [
+        {
+          "claim": "Unit 1D is priced at \u20b91.89 Cr.",
+          "supported": false
+        }
+      ],
+      "expected_max_score": 0.0
+    },
+    {
+      "id": "gen_full_listing_13",
+      "bucket": "fully_supported",
+      "question": "Tell me about unit 2E.",
+      "contexts": [
+        "Project: Oakwood Residences, Bengaluru. Unit 2E is a 2BHK apartment priced at \u20b91.56 Cr. Carpet area is 1105 sq ft. Amenities: covered parking. Floor 14 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 2E is a 2BHK priced at \u20b91.56 Cr. Carpet area is 1105 sq ft. It includes covered parking.",
+      "human_claims": [
+        {
+          "claim": "Unit 2E is a 2BHK priced at \u20b91.56 Cr.",
+          "supported": true
+        },
+        {
+          "claim": "Carpet area is 1105 sq ft.",
+          "supported": true
+        },
+        {
+          "claim": "It includes covered parking.",
+          "supported": true
+        }
+      ],
+      "expected_max_score": 1.0
+    },
+    {
+      "id": "gen_price_listing_13",
+      "bucket": "wrong_price_or_feature",
+      "question": "What is the price of unit 2E?",
+      "contexts": [
+        "Project: Oakwood Residences, Bengaluru. Unit 2E is a 2BHK apartment priced at \u20b91.56 Cr. Carpet area is 1105 sq ft. Amenities: covered parking. Floor 14 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 2E is priced at \u20b91.96 Cr.",
+      "human_claims": [
+        {
+          "claim": "Unit 2E is priced at \u20b91.96 Cr.",
+          "supported": false
+        }
+      ],
+      "expected_max_score": 0.0
+    },
+    {
+      "id": "gen_full_listing_14",
+      "bucket": "fully_supported",
+      "question": "Tell me about unit 3F.",
+      "contexts": [
+        "Project: Lakeview Heights, Hyderabad. Unit 3F is a 2BHK apartment priced at \u20b91.63 Cr. Carpet area is 1140 sq ft. Amenities: pool, power backup. Floor 15 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 3F is a 2BHK priced at \u20b91.63 Cr. Carpet area is 1140 sq ft. It includes pool.",
+      "human_claims": [
+        {
+          "claim": "Unit 3F is a 2BHK priced at \u20b91.63 Cr.",
+          "supported": true
+        },
+        {
+          "claim": "Carpet area is 1140 sq ft.",
+          "supported": true
+        },
+        {
+          "claim": "It includes pool.",
+          "supported": true
+        }
+      ],
+      "expected_max_score": 1.0
+    },
+    {
+      "id": "gen_price_listing_14",
+      "bucket": "wrong_price_or_feature",
+      "question": "What is the price of unit 3F?",
+      "contexts": [
+        "Project: Lakeview Heights, Hyderabad. Unit 3F is a 2BHK apartment priced at \u20b91.63 Cr. Carpet area is 1140 sq ft. Amenities: pool, power backup. Floor 15 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 3F is priced at \u20b92.03 Cr.",
+      "human_claims": [
+        {
+          "claim": "Unit 3F is priced at \u20b92.03 Cr.",
+          "supported": false
+        }
+      ],
+      "expected_max_score": 0.0
+    },
+    {
+      "id": "gen_full_listing_15",
+      "bucket": "fully_supported",
+      "question": "Tell me about unit 4G.",
+      "contexts": [
+        "Project: Palm Grove, Pune. Unit 4G is a 3BHK apartment priced at \u20b91.7 Cr. Carpet area is 1175 sq ft. Amenities: gym, security. Floor 1 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 4G is a 3BHK priced at \u20b91.7 Cr. Carpet area is 1175 sq ft. It includes gym.",
+      "human_claims": [
+        {
+          "claim": "Unit 4G is a 3BHK priced at \u20b91.7 Cr.",
+          "supported": true
+        },
+        {
+          "claim": "Carpet area is 1175 sq ft.",
+          "supported": true
+        },
+        {
+          "claim": "It includes gym.",
+          "supported": true
+        }
+      ],
+      "expected_max_score": 1.0
+    },
+    {
+      "id": "gen_price_listing_15",
+      "bucket": "wrong_price_or_feature",
+      "question": "What is the price of unit 4G?",
+      "contexts": [
+        "Project: Palm Grove, Pune. Unit 4G is a 3BHK apartment priced at \u20b91.7 Cr. Carpet area is 1175 sq ft. Amenities: gym, security. Floor 1 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 4G is priced at \u20b92.1 Cr.",
+      "human_claims": [
+        {
+          "claim": "Unit 4G is priced at \u20b92.1 Cr.",
+          "supported": false
+        }
+      ],
+      "expected_max_score": 0.0
+    },
+    {
+      "id": "gen_full_listing_16",
+      "bucket": "fully_supported",
+      "question": "Tell me about unit 5H.",
+      "contexts": [
+        "Project: Skyline Park, Chennai. Unit 5H is a 2BHK apartment priced at \u20b91.77 Cr. Carpet area is 1210 sq ft. Amenities: clubhouse, jogging track. Floor 2 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 5H is a 2BHK priced at \u20b91.77 Cr. Carpet area is 1210 sq ft. It includes clubhouse.",
+      "human_claims": [
+        {
+          "claim": "Unit 5H is a 2BHK priced at \u20b91.77 Cr.",
+          "supported": true
+        },
+        {
+          "claim": "Carpet area is 1210 sq ft.",
+          "supported": true
+        },
+        {
+          "claim": "It includes clubhouse.",
+          "supported": true
+        }
+      ],
+      "expected_max_score": 1.0
+    },
+    {
+      "id": "gen_price_listing_16",
+      "bucket": "wrong_price_or_feature",
+      "question": "What is the price of unit 5H?",
+      "contexts": [
+        "Project: Skyline Park, Chennai. Unit 5H is a 2BHK apartment priced at \u20b91.77 Cr. Carpet area is 1210 sq ft. Amenities: clubhouse, jogging track. Floor 2 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 5H is priced at \u20b92.17 Cr.",
+      "human_claims": [
+        {
+          "claim": "Unit 5H is priced at \u20b92.17 Cr.",
+          "supported": false
+        }
+      ],
+      "expected_max_score": 0.0
+    },
+    {
+      "id": "gen_full_listing_17",
+      "bucket": "fully_supported",
+      "question": "Tell me about unit 6A.",
+      "contexts": [
+        "Project: Oakwood Residences, Bengaluru. Unit 6A is a 2BHK apartment priced at \u20b91.84 Cr. Carpet area is 1245 sq ft. Amenities: pool, covered parking. Floor 3 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 6A is a 2BHK priced at \u20b91.84 Cr. Carpet area is 1245 sq ft. It includes pool.",
+      "human_claims": [
+        {
+          "claim": "Unit 6A is a 2BHK priced at \u20b91.84 Cr.",
+          "supported": true
+        },
+        {
+          "claim": "Carpet area is 1245 sq ft.",
+          "supported": true
+        },
+        {
+          "claim": "It includes pool.",
+          "supported": true
+        }
+      ],
+      "expected_max_score": 1.0
+    },
+    {
+      "id": "gen_price_listing_17",
+      "bucket": "wrong_price_or_feature",
+      "question": "What is the price of unit 6A?",
+      "contexts": [
+        "Project: Oakwood Residences, Bengaluru. Unit 6A is a 2BHK apartment priced at \u20b91.84 Cr. Carpet area is 1245 sq ft. Amenities: pool, covered parking. Floor 3 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 6A is priced at \u20b92.24 Cr.",
+      "human_claims": [
+        {
+          "claim": "Unit 6A is priced at \u20b92.24 Cr.",
+          "supported": false
+        }
+      ],
+      "expected_max_score": 0.0
+    },
+    {
+      "id": "gen_full_listing_18",
+      "bucket": "fully_supported",
+      "question": "Tell me about unit 7B.",
+      "contexts": [
+        "Project: Lakeview Heights, Hyderabad. Unit 7B is a 1BHK apartment priced at \u20b91.91 Cr. Carpet area is 1280 sq ft. Amenities: gym, clubhouse. Floor 4 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 7B is a 1BHK priced at \u20b91.91 Cr. Carpet area is 1280 sq ft. It includes gym.",
+      "human_claims": [
+        {
+          "claim": "Unit 7B is a 1BHK priced at \u20b91.91 Cr.",
+          "supported": true
+        },
+        {
+          "claim": "Carpet area is 1280 sq ft.",
+          "supported": true
+        },
+        {
+          "claim": "It includes gym.",
+          "supported": true
+        }
+      ],
+      "expected_max_score": 1.0
+    },
+    {
+      "id": "gen_price_listing_18",
+      "bucket": "wrong_price_or_feature",
+      "question": "What is the price of unit 7B?",
+      "contexts": [
+        "Project: Lakeview Heights, Hyderabad. Unit 7B is a 1BHK apartment priced at \u20b91.91 Cr. Carpet area is 1280 sq ft. Amenities: gym, clubhouse. Floor 4 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 7B is priced at \u20b92.31 Cr.",
+      "human_claims": [
+        {
+          "claim": "Unit 7B is priced at \u20b92.31 Cr.",
+          "supported": false
+        }
+      ],
+      "expected_max_score": 0.0
+    },
+    {
+      "id": "gen_full_listing_19",
+      "bucket": "fully_supported",
+      "question": "Tell me about unit 8C.",
+      "contexts": [
+        "Project: Palm Grove, Pune. Unit 8C is a 2BHK apartment priced at \u20b91.98 Cr. Carpet area is 1315 sq ft. Amenities: pool, gym. Floor 5 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 8C is a 2BHK priced at \u20b91.98 Cr. Carpet area is 1315 sq ft. It includes pool.",
+      "human_claims": [
+        {
+          "claim": "Unit 8C is a 2BHK priced at \u20b91.98 Cr.",
+          "supported": true
+        },
+        {
+          "claim": "Carpet area is 1315 sq ft.",
+          "supported": true
+        },
+        {
+          "claim": "It includes pool.",
+          "supported": true
+        }
+      ],
+      "expected_max_score": 1.0
+    },
+    {
+      "id": "gen_price_listing_19",
+      "bucket": "wrong_price_or_feature",
+      "question": "What is the price of unit 8C?",
+      "contexts": [
+        "Project: Palm Grove, Pune. Unit 8C is a 2BHK apartment priced at \u20b91.98 Cr. Carpet area is 1315 sq ft. Amenities: pool, gym. Floor 5 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 8C is priced at \u20b92.38 Cr.",
+      "human_claims": [
+        {
+          "claim": "Unit 8C is priced at \u20b92.38 Cr.",
+          "supported": false
+        }
+      ],
+      "expected_max_score": 0.0
+    },
+    {
+      "id": "gen_full_listing_20",
+      "bucket": "fully_supported",
+      "question": "Tell me about unit 9D.",
+      "contexts": [
+        "Project: Skyline Park, Chennai. Unit 9D is a 2BHK apartment priced at \u20b92.05 Cr. Carpet area is 1350 sq ft. Amenities: garden, children play area. Floor 6 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 9D is a 2BHK priced at \u20b92.05 Cr. Carpet area is 1350 sq ft. It includes garden.",
+      "human_claims": [
+        {
+          "claim": "Unit 9D is a 2BHK priced at \u20b92.05 Cr.",
+          "supported": true
+        },
+        {
+          "claim": "Carpet area is 1350 sq ft.",
+          "supported": true
+        },
+        {
+          "claim": "It includes garden.",
+          "supported": true
+        }
+      ],
+      "expected_max_score": 1.0
+    },
+    {
+      "id": "gen_price_listing_20",
+      "bucket": "wrong_price_or_feature",
+      "question": "What is the price of unit 9D?",
+      "contexts": [
+        "Project: Skyline Park, Chennai. Unit 9D is a 2BHK apartment priced at \u20b92.05 Cr. Carpet area is 1350 sq ft. Amenities: garden, children play area. Floor 6 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 9D is priced at \u20b92.45 Cr.",
+      "human_claims": [
+        {
+          "claim": "Unit 9D is priced at \u20b92.45 Cr.",
+          "supported": false
+        }
+      ],
+      "expected_max_score": 0.0
+    },
+    {
+      "id": "gen_merge_listing_01_listing_02",
+      "bucket": "facts_merged_across_properties",
+      "question": "Summarize unit 2A.",
+      "contexts": [
+        "Project: Oakwood Residences, Bengaluru. Unit 2A is a 2BHK apartment priced at \u20b90.72 Cr. Carpet area is 685 sq ft. Amenities: pool, covered parking. Floor 2 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 2A is a 2BHK. Unit 2A is priced at \u20b90.72 Cr. Unit 2A has clubhouse.",
+      "human_claims": [
+        {
+          "claim": "Unit 2A is a 2BHK.",
+          "supported": true
+        },
+        {
+          "claim": "Unit 2A is priced at \u20b90.72 Cr.",
+          "supported": true
+        },
+        {
+          "claim": "Unit 2A has clubhouse.",
+          "supported": false
+        }
+      ],
+      "expected_max_score": 0.67
+    },
+    {
+      "id": "gen_merge_listing_03_listing_04",
+      "bucket": "facts_merged_across_properties",
+      "question": "Summarize unit 4C.",
+      "contexts": [
+        "Project: Palm Grove, Pune. Unit 4C is a 3BHK apartment priced at \u20b90.86 Cr. Carpet area is 755 sq ft. Amenities: pool, gym. Floor 4 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 4C is a 2BHK. Unit 4C is priced at \u20b90.86 Cr. Unit 4C has children play area.",
+      "human_claims": [
+        {
+          "claim": "Unit 4C is a 2BHK.",
+          "supported": false
+        },
+        {
+          "claim": "Unit 4C is priced at \u20b90.86 Cr.",
+          "supported": true
+        },
+        {
+          "claim": "Unit 4C has children play area.",
+          "supported": false
+        }
+      ],
+      "expected_max_score": 0.67
+    },
+    {
+      "id": "gen_merge_listing_05_listing_06",
+      "bucket": "facts_merged_across_properties",
+      "question": "Summarize unit 6E.",
+      "contexts": [
+        "Project: Oakwood Residences, Bengaluru. Unit 6E is a 2BHK apartment priced at \u20b91.0 Cr. Carpet area is 825 sq ft. Amenities: covered parking. Floor 6 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Unit 6E is a 1BHK. Unit 6E is priced at \u20b91.0 Cr. Unit 6E has power backup.",
+      "human_claims": [
+        {
+          "claim": "Unit 6E is a 1BHK.",
+          "supported": false
+        },
+        {
+          "claim": "Unit 6E is priced at \u20b91.0 Cr.",
+          "supported": true
+        },
+        {
+          "claim": "Unit 6E has power backup.",
+          "supported": false
+        }
+      ],
+      "expected_max_score": 0.67
+    },
+    {
+      "id": "gen_empty_retrieval",
+      "bucket": "empty_retrieval",
+      "question": "Price of unit 9Z?",
+      "contexts": [],
+      "answer": "Unit 9Z is priced at \u20b92.0 Cr.",
+      "human_claims": [
+        {
+          "claim": "Unit 9Z is priced at \u20b92.0 Cr.",
+          "supported": false
+        }
+      ],
+      "expected_max_score": 0.0
+    },
+    {
+      "id": "gen_correct_unsupported",
+      "bucket": "correct_but_unsupported",
+      "question": "Does Oakwood have a metro nearby?",
+      "contexts": [
+        "Project: Oakwood Residences, Bengaluru. Unit 2A is a 2BHK apartment priced at \u20b90.72 Cr. Carpet area is 685 sq ft. Amenities: pool, covered parking. Floor 2 of 18. Possession: ready-to-move."
+      ],
+      "answer": "Yes, the metro is 500m away.",
+      "human_claims": [
+        {
+          "claim": "The metro is 500m away.",
+          "supported": false
+        }
+      ],
+      "expected_max_score": 0.0
+    }
+  ]
+}

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Build 01 — Faithfulness architecture</title>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --node-bg: #ffffff;
+      --node-bg-muted: #f5f5f7;
+      --node-stroke: #d5d8e0;
+      --node-stroke-strong: #b8bcc8;
+      --node-stroke-focus: #1096e7;
+      --text-primary: #070708;
+      --text-secondary: #4d5059;
+      --canvas: #f7f8fa;
+      --radius: 12px;
+      --accent-ok: #1f8a70;
+      --accent-warn: #c44b2f;
+      --model-bar: #1096e7;
+      --gap: 28px;
+      --shadow: 0 1px 2px rgba(7, 7, 8, 0.04);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      background: #e8eaef;
+      display: grid;
+      place-items: center;
+      padding: 32px 20px 48px;
+      font-family: Geist, "Segoe UI", system-ui, sans-serif;
+      color: var(--text-primary);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      width: min(1120px, 100%);
+    }
+
+    .eyebrow {
+      font-family: "Geist Mono", ui-monospace, monospace;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .thesis {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+      max-width: 52ch;
+      line-height: 1.45;
+    }
+
+    .board {
+      background: var(--canvas);
+      border: 1px solid var(--node-stroke);
+      border-radius: 16px;
+      padding: 40px 36px 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: 200px 36px 1fr 36px 1fr 36px 200px;
+      grid-template-rows: auto auto auto;
+      align-items: center;
+      column-gap: 0;
+      row-gap: 20px;
+    }
+
+    .col-inputs {
+      grid-column: 1;
+      grid-row: 1 / span 2;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      justify-content: center;
+    }
+
+    .arrow-1 { grid-column: 2; grid-row: 1 / span 2; }
+    .node-decompose { grid-column: 3; grid-row: 1 / span 2; }
+    .arrow-2 { grid-column: 4; grid-row: 1 / span 2; }
+    .node-verify { grid-column: 5; grid-row: 1 / span 2; }
+    .arrow-3 { grid-column: 6; grid-row: 1 / span 2; }
+    .node-score { grid-column: 7; grid-row: 1; }
+    .node-audit { grid-column: 7; grid-row: 2; }
+
+    .arrow-cell {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      min-height: 120px;
+    }
+
+    .arrow-cell svg { width: 28px; height: 16px; display: block; }
+
+    .node {
+      background: var(--node-bg);
+      border: 1px solid var(--node-stroke);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      min-height: 72px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 4px;
+      position: relative;
+    }
+
+    .node.muted {
+      background: var(--node-bg-muted);
+    }
+
+    .node.model {
+      padding-left: 18px;
+    }
+
+    .node.model::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 10px;
+      bottom: 10px;
+      width: 3px;
+      border-radius: 0 2px 2px 0;
+      background: var(--model-bar);
+    }
+
+    .node.output {
+      border-color: var(--node-stroke-strong);
+      border-width: 1.5px;
+    }
+
+    .node.secondary {
+      border-style: dashed;
+      background: var(--node-bg-muted);
+      min-height: 64px;
+      opacity: 0.95;
+    }
+
+    .kind {
+      font-family: "Geist Mono", ui-monospace, monospace;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    .title {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--text-primary);
+    }
+
+    .sub {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.35;
+    }
+
+    .sub.mono {
+      font-family: "Geist Mono", ui-monospace, monospace;
+      font-size: 11px;
+    }
+
+    .lane {
+      grid-column: 1 / -1;
+      grid-row: 3;
+      margin-top: 8px;
+      padding-top: 20px;
+      border-top: 1px solid var(--node-stroke);
+      display: flex;
+      align-items: stretch;
+      gap: 12px;
+    }
+
+    .lane-label {
+      font-family: "Geist Mono", ui-monospace, monospace;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      writing-mode: horizontal-tb;
+      align-self: center;
+      min-width: 88px;
+    }
+
+    .lane-nodes {
+      display: flex;
+      flex: 1;
+      gap: 12px;
+    }
+
+    .chip {
+      flex: 1;
+      background: var(--node-bg);
+      border: 1px solid var(--node-stroke);
+      border-radius: 10px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .chip.ok { border-color: var(--accent-ok); }
+    .chip.warn { border-color: var(--accent-warn); }
+
+    .chip .title { font-size: 13px; }
+    .chip .sub { font-size: 11px; }
+
+    .foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 16px;
+      padding: 0 4px;
+      font-family: "Geist Mono", ui-monospace, monospace;
+      font-size: 11px;
+      color: var(--text-secondary);
+    }
+
+    @media (max-width: 900px) {
+      .flow {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .arrow-cell { min-height: 20px; transform: rotate(90deg); }
+      .col-inputs { width: 100%; }
+      .lane { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <p class="eyebrow">Build 01 · production architecture</p>
+    <h1>Faithfulness evaluator</h1>
+    <p class="thesis">LLM faithfulness eval as a production pipeline — claim-level decompose and verify against retrieved context, then score and audit the judge.</p>
+
+    <div class="board" role="img" aria-label="Faithfulness architecture: answer and context into decompose, verify, score, with kappa audit">
+      <div class="flow">
+        <div class="col-inputs">
+          <div class="node muted">
+            <span class="kind">input</span>
+            <span class="title">Answer</span>
+            <span class="sub">RAG model output</span>
+          </div>
+          <div class="node muted">
+            <span class="kind">store</span>
+            <span class="title">Retrieved context</span>
+            <span class="sub">Listing evidence only</span>
+          </div>
+        </div>
+
+        <div class="arrow-cell arrow-1" aria-hidden="true">
+          <svg viewBox="0 0 28 16" fill="none"><path d="M2 8h20M16 2l8 6-8 6" stroke="#B8BCC8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+
+        <div class="node model node-decompose">
+          <span class="kind">model · process</span>
+          <span class="title">Decompose</span>
+          <span class="sub mono">atomic claims S</span>
+        </div>
+
+        <div class="arrow-cell arrow-2" aria-hidden="true">
+          <svg viewBox="0 0 28 16" fill="none"><path d="M2 8h20M16 2l8 6-8 6" stroke="#B8BCC8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+
+        <div class="node model node-verify">
+          <span class="kind">model · process</span>
+          <span class="title">Verify</span>
+          <span class="sub mono">claim ⊂ context → V</span>
+        </div>
+
+        <div class="arrow-cell arrow-3" aria-hidden="true">
+          <svg viewBox="0 0 28 16" fill="none"><path d="M2 8h20M16 2l8 6-8 6" stroke="#B8BCC8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+
+        <div class="node output node-score">
+          <span class="kind">output</span>
+          <span class="title">Score</span>
+          <span class="sub mono">|V| / |S|</span>
+        </div>
+
+        <div class="node secondary node-audit">
+          <span class="kind">audit</span>
+          <span class="title">Judge audit</span>
+          <span class="sub mono">κ · replicates · order</span>
+        </div>
+
+        <div class="lane">
+          <div class="lane-label">Claim outcomes</div>
+          <div class="lane-nodes">
+            <div class="chip ok">
+              <span class="kind">decision</span>
+              <span class="title">Supported</span>
+              <span class="sub">Grounded in retrieved context</span>
+            </div>
+            <div class="chip warn">
+              <span class="kind">decision</span>
+              <span class="title">Unsupported</span>
+              <span class="sub">Missing, invented, or merged</span>
+            </div>
+            <div class="chip">
+              <span class="kind">instrument</span>
+              <span class="title">costmeter</span>
+              <span class="sub">tokens · $ · p50 / p95</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="foot">
+      <span>saran.build</span>
+      <span>paper-to-production · 01-faithfulness</span>
+    </div>
+  </div>
+</body>
+</html>
